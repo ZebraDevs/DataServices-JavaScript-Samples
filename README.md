@@ -5,3 +5,5 @@ This sample code is meant to be used with the [Savanna JavaScript SDK](https://g
 
 For more information on these APIs, go to [Developer.zebra.com/apis](https://developer.zebra.com/apis) or visit the [Forums](https://developer.zebra.com/forum/search?keys=&field_zebra_curated_tags_tid%5B%5D=273)
 
+### API Key
+To get an API key to work with these APIs, use the [Getting Started Guide](https://developer.zebra.com/gsg) and select the Barcode Intelligence product. 
