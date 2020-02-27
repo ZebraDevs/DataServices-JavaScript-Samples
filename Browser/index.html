@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Examples</title>
+        <script src="Base.mjs" type="module"></script>
+        <script src="Symbology.mjs" type="module"></script>
+        <script src="CreateBarcode.js" type="module"></script>
+        <script src="AllCode.js" type="module"></script>
+    </head>
+    <body> 
+ 
+
+        <script>
+            (function(window, document, undefined){
+               setApiKey("I1sUUtRw8aLqzxwW7RwGTkpJxCN06INb");
+               Create(Symbology.upca, "047701002292", 1, "N", true);
+            })(this, this.document);
+        </script>
+    </body>
+</html>
+
