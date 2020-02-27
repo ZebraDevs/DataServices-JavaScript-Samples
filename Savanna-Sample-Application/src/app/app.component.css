@@ -1,0 +1,10 @@
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.5em;
+  border: 1em;
+  border-color: rosybrown;
+  border-width: 0.2em;
+  border-style: solid;
+  height: 10%;
+  width: 20%;
+}
