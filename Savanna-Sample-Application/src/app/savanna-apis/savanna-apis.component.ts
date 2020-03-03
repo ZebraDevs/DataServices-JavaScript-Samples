@@ -9,32 +9,69 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./savanna-apis.component.css']
 })
 export class SavannaAPISComponent implements OnInit {
-  radioButton;
+  radioButton: any;
+  fdaRecallFunction: any;
+  fdaRecallType: any;
+  createBarcodeIncludeText: any;
+  createBarcodeScale: any;
+  createBarcodeScaleX: any;
+  createBarcodeScaleY: any;
+  createBarcodeDisabled: string;
 
   constructor() {
     this.radioButton = {
       function: ''
     };
+    this.createBarcodeIncludeText = {
+      function: ''
+    };
+    this.fdaRecallFunction = {
+      function: ''
+    };
+    this.fdaRecallType = {
+      function: ''
+    };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.makeInputHidden();
+  }
 
   inputSelector() {
-    const div = document.getElementById('options');
-    div.innerHTML = '';
+    const createBarcodeOptions = document.getElementById('createBarcodeOptions');
+    const fdaRecallOptions = document.getElementById('fdaRecallOptions');
+    const upcLookupOptions = document.getElementById('upcLookupOptions');
+    createBarcodeOptions.hidden = true;
+    fdaRecallOptions.hidden = true;
+    upcLookupOptions.hidden = true;
     if (this.radioButton.function === 'CreateBarcode') {
       // Display CreateBarcode options
-
-      div.innerHTML = `
-      <mat-form-field class="example-full-width">
-    <mat-label>Leave a comment</mat-label>
-    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-  </mat-form-field>
-      `;
+      createBarcodeOptions.hidden = false;
     } else if (this.radioButton.function === 'FDARecall') {
       // Display FDARecall options
+      fdaRecallOptions.hidden = false;
     } else {
+      upcLookupOptions.hidden = false;
       // Display UPCLookup options
+    }
+  }
+
+  makeInputHidden() {
+    const createBarcodeOptions = document.getElementById('createBarcodeOptions');
+    const fdaRecallOptions = document.getElementById('fdaRecallOptions');
+    const upcLookupOptions = document.getElementById('upcLookupOptions');
+    createBarcodeOptions.hidden = true;
+    fdaRecallOptions.hidden = true;
+    upcLookupOptions.hidden = true;
+  }
+
+  disableScales() {
+    if (this.createBarcodeScale) {
+      this.createBarcodeDisabled = 'XY';
+    } else if (this.createBarcodeScaleX || this.createBarcodeScaleY) {
+      this.createBarcodeDisabled = 'Scale';
+    } else {
+    this.createBarcodeDisabled = '';
     }
   }
 }

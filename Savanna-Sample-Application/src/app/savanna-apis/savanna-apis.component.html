@@ -1,8 +1,124 @@
 <mat-radio-group class="selector-group" (change)="inputSelector()">
-  <mat-radio-button class="CreateBarcode" value="CreateBarcode" (click)="radioButton.function='CreateBarcode'">Create Barcode</mat-radio-button>
-  <mat-radio-button class="FDARecall" value="FDARecall" (click)="radioButton.function='FDARecall'">FDARecall</mat-radio-button>
-  <mat-radio-button class="UPCLookup" value="UPCLookup" (click)="radioButton.function='UPCLookup'">UPC Lookup</mat-radio-button>
+  <mat-radio-button
+    class="CreateBarcode"
+    value="CreateBarcode"
+    (click)="radioButton.function = 'CreateBarcode'"
+    >Create Barcode</mat-radio-button
+  >
+  <mat-radio-button
+    class="FDARecall"
+    value="FDARecall"
+    (click)="radioButton.function = 'FDARecall'"
+    >FDARecall</mat-radio-button
+  >
+  <mat-radio-button
+    class="UPCLookup"
+    value="UPCLookup"
+    (click)="radioButton.function = 'UPCLookup'"
+    >UPC Lookup</mat-radio-button
+  >
 </mat-radio-group>
-
-<div id="options"></div>
-
+<div>
+  <div id="createBarcodeOptions">
+    <mat-form-field appearance="standard">
+      <mat-label>Symbology</mat-label>
+      <input matInput placeholder="code39" />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Text</mat-label>
+      <input matInput placeholder="Hello-World" />
+    </mat-form-field>
+    <mat-form-field id="createBarcodeScale" appearance="standard">
+      <mat-label>Scale</mat-label>
+      <input
+        matInput
+        placeholder="1"
+        [(ngModel)]="createBarcodeScale"
+        (change)="disableScales()"
+        [disabled]="createBarcodeDisabled === 'Scale'"
+      />
+    </mat-form-field>
+    <mat-form-field id="createBarcodeScaleX" appearance="standard">
+      <mat-label>ScaleX</mat-label>
+      <input
+        matInput
+        placeholder="1"
+        [(ngModel)]="createBarcodeScaleX"
+        (change)="disableScales()"
+        [disabled]="createBarcodeDisabled === 'XY'"
+      />
+    </mat-form-field>
+    <mat-form-field id="createBarcodeScaleY" appearance="standard">
+      <mat-label>ScaleY</mat-label>
+      <input
+        matInput
+        placeholder="1"
+        [(ngModel)]="createBarcodeScaleY"
+        (change)="disableScales()"
+        [disabled]="createBarcodeDisabled === 'XY'"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Rotation</mat-label>
+      <input matInput placeholder="N" />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>symbology</mat-label>
+      <input matInput placeholder="code39" />
+    </mat-form-field>
+    <mat-checkbox
+      class="includeText"
+      value=""
+      (click)="createBarcodeIncludeText.function = true"
+      >Include Text</mat-checkbox
+    >
+  </div>
+  <div id="fdaRecallOptions">
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Device" />
+    </mat-form-field>
+    <mat-radio-group>
+      <mat-radio-button
+        class="device"
+        value=""
+        (click)="fdaRecallFunction.function = 'device'"
+        >Device</mat-radio-button
+      >
+      <mat-radio-button
+        class="drug"
+        value=""
+        (click)="fdaRecallFunction.function = 'drug'"
+        >Drug</mat-radio-button
+      >
+      <mat-radio-button
+        class="food"
+        value=""
+        (click)="fdaRecallFunction.function = 'food'"
+        >Food</mat-radio-button
+      >
+    </mat-radio-group>
+    <br>
+    <mat-radio-group>
+      <mat-radio-button
+        class="upc"
+        value=""
+        (click)="fdaRecallType.function = 'upc'"
+        >UPC</mat-radio-button
+      >
+      <mat-radio-button
+        class="search"
+        value=""
+        (click)="fdaRecallType.function = 'search'"
+        >Search</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <div id="upcLookupOptions">
+    <mat-form-field appearance="standard">
+      <mat-label>Standard form field</mat-label>
+      <input matInput placeholder="Placeholder" />
+      <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+  </div>
+</div>
