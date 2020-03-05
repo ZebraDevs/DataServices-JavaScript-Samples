@@ -1,14 +1,9 @@
 {
-  "name": "zebra.savanna",
+  "name": "SavannaBarcode",
   "version": "1.0.0",
-  "description": "",
-  "main": "AllCode.js",
+  "description": "Allows you to use Zebra Technologies' Savanna Barcode APIs",
+  "main": "SavannaBarcode.js",
   "dependencies": {
-    "commander": "^4.1.0",
-    "connect": "^3.7.0",
-    "fetch": "^1.1.0",
-    "node-fetch": "^2.6.0",
-    "serve-static": "^1.14.1",
     "yargs": "^15.1.0"
   },
   "devDependencies": {},
@@ -16,6 +11,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "Zebra Technologies",
   "license": "ISC"
 }
