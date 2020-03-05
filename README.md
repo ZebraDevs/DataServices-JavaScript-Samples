@@ -1,4 +1,4 @@
-Zebra Savanna Data Servcies JavaScript Sample Code
+Zebra Savanna Data Services JavaScript Sample Code
 ===================================
 
 This sample code is meant to be used with the [Savanna JavaScript SDK](https://github.com/Zebra/Savanna-JavaScript-SDK).  It shows basic demos of the main Data Services APIs and how to use the JavaScript SDK to access them.  For use with Webclient applications.
