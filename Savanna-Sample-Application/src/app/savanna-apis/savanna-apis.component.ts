@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// import { AllCode } from '../../assets/js/AllCode';
-declare var AllCode: any;
+import * as AllCode from '../../assets/js/AllCode';
+// declare var AllCode: any;
 
 // This is where you define the functions you want to use from AllCode.js
 // declare const
@@ -40,6 +40,7 @@ export class SavannaAPISComponent implements OnInit {
     };
     this.fdaArgs = {
       function: '',
+      searchType: '',
       searchValue: ''
     };
     this.upcLookupArgs = {
@@ -47,9 +48,11 @@ export class SavannaAPISComponent implements OnInit {
     };
   }
 
+
   ngOnInit(): void {
     this.makeInputHidden();
   }
+
 
   inputSelector() {
     const createBarcodeOptions = document.getElementById('createBarcodeOptions');
@@ -72,6 +75,7 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
+
   makeInputHidden() {
     const createBarcodeOptions = document.getElementById('createBarcodeOptions');
     const fdaRecallOptions = document.getElementById('fdaRecallOptions');
@@ -83,6 +87,7 @@ export class SavannaAPISComponent implements OnInit {
     go.hidden = true;
   }
 
+
   disableScales() {
     if (this.createBarcodeScale) {
       this.createBarcodeDisabled = 'XY';
@@ -93,22 +98,31 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
-  setFdaRecallFunction(fun) {
-    // console.log(this.fdaRecallFunction.function + this.fdaRecallType.function);
-    console.log(fun);
+
+  setFdaRecallFunction(fun: string) {
+    this.fdaArgs.function = fun;
   }
 
-  setFdaRecallType(type) {
-    console.log(type);
+
+  setFdaSearchType(type: string) {
+    this.fdaArgs.searchType = type;
   }
+
+
+  setFdaSearchValue(value: string) {
+    this.fdaArgs.searchValue = value;
+  }
+
 
   setSymbology(symbology: string) {
     this.barcodeArgs.symbology = symbology;
   }
 
+
   setText(text: string) {
     this.barcodeArgs.text = text;
   }
+
 
   setScale(scale: string) {
     this.barcodeArgs.scaleX = null;
@@ -116,19 +130,23 @@ export class SavannaAPISComponent implements OnInit {
     this.barcodeArgs.scale = scale;
   }
 
+
   setScaleX(scaleX: string) {
     this.barcodeArgs.scaleX = scaleX;
     this.barcodeArgs.scale = null;
   }
+
 
   setScaleY(scaleY: string) {
     this.barcodeArgs.scaleY = scaleY;
     this.barcodeArgs.scale = null;
   }
 
+
   setRotation(rotation: string) {
     this.barcodeArgs.rotation = rotation;
   }
+
 
   setIncludeText() {
     if (this.barcodeArgs.includeText) {
@@ -140,11 +158,17 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
+
+  setUpc(upc: string) {
+    this.upcLookupArgs.upc = upc;
+  }
+
+
   runProgram() {
     // Gets the function
     const func = this.getFunction();
     if (func === 'CreateBarcode') {
-      AllCode.Create(
+      var barcode = AllCode.Create(
         this.barcodeArgs.symbology,
         this.barcodeArgs.text,
         this.barcodeArgs.scale,
@@ -163,21 +187,26 @@ export class SavannaAPISComponent implements OnInit {
     console.log(this.barcodeArgs);
   }
 
+
   getFunction() {
     // Gets the type of call that's going to be made.
     return this.radioButton.function;
   }
 
+
   getCreateBarcodeArgs() {
 
   }
+
 
   getFDARecallArgs() {
 
   }
 
+
   getUPCLookupArgs() {
 
   }
+
 
 }

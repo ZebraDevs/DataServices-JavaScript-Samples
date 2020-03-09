@@ -82,7 +82,8 @@
   <div id="fdaRecallOptions">
     <mat-form-field appearance="standard">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Device" />
+      <input matInput placeholder="Device" 
+      #searchValue (change)="setFdaSearchValue(searchValue.value)"/>
     </mat-form-field>
     <mat-button-toggle-group #function="matButtonToggleGroup">
       <mat-button-toggle
@@ -103,35 +104,32 @@
       <mat-button-toggle
       class="device"
       value="device"
-      (change)="setFdaRecallType($event.value)">
+      (change)="setFdaSearchType($event.value)">
         Device
       </mat-button-toggle>
       <mat-button-toggle
       class="drug"
       value="drug"
-      (change)="setFdaRecallType($event.value)">
+      (change)="setFdaSearchType($event.value)">
         Drug
       </mat-button-toggle>
       <mat-button-toggle
       class="food"
       value="food"
-      (change)="setFdaRecallType($event.value)">
+      (change)="setFdaSearchType($event.value)">
         Food
       </mat-button-toggle>
     </mat-button-toggle-group>
-
-
-
-
-
   </div>
   <div id="upcLookupOptions">
     <mat-form-field appearance="standard">
       <mat-label>UPC</mat-label>
-      <input matInput placeholder="9781483922973" />
+      <input matInput placeholder="9781483922973"
+      #upc (change)="setUpc(upc.value)"/>
     </mat-form-field>
   </div>
 </div>
+
 <div id="go">
 <button mat-flat-button
 (click)="runProgram()"
