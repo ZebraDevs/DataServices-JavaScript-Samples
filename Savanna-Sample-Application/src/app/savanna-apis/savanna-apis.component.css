@@ -6,3 +6,23 @@ mat-radio-group {
   margin: 0.5em;
   width: 20%;
 }
+
+mat-button-toggle-group {
+  margin: 0.2em;
+}
+
+mat-form-field {
+  margin: 0.2em;
+}
+
+button {
+  margin: 0.5em;
+}
+
+mat-toolbar {
+  background-color: plum;
+  border: 0.2em;
+  border-style:dashed;
+  border-color: darksalmon;
+
+}

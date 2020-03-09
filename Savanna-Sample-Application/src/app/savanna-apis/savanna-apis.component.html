@@ -1,3 +1,7 @@
+<mat-toolbar>
+  <span>Savanna Sample Application</span>
+</mat-toolbar>
+<br>
 <mat-radio-group class="selector-group" (change)="inputSelector()">
   <mat-radio-button
     class="CreateBarcode"
@@ -22,11 +26,13 @@
   <div id="createBarcodeOptions">
     <mat-form-field appearance="standard">
       <mat-label>Symbology</mat-label>
-      <input matInput placeholder="code39" />
+      <input matInput placeholder="code39"
+      #symbology (change)="setSymbology(symbology.value)"/>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Text</mat-label>
-      <input matInput placeholder="Hello-World" />
+      <input matInput placeholder="Hello-World"
+      #text (change)="setText(text.value)"/>
     </mat-form-field>
     <mat-form-field id="createBarcodeScale" appearance="standard">
       <mat-label>Scale</mat-label>
@@ -36,6 +42,7 @@
         [(ngModel)]="createBarcodeScale"
         (change)="disableScales()"
         [disabled]="createBarcodeDisabled === 'Scale'"
+        #scale (change)="setScale(scale.value)"
       />
     </mat-form-field>
     <mat-form-field id="createBarcodeScaleX" appearance="standard">
@@ -46,6 +53,7 @@
         [(ngModel)]="createBarcodeScaleX"
         (change)="disableScales()"
         [disabled]="createBarcodeDisabled === 'XY'"
+        #scaleX (change)="setScaleX(scaleX.value)"
       />
     </mat-form-field>
     <mat-form-field id="createBarcodeScaleY" appearance="standard">
@@ -56,20 +64,18 @@
         [(ngModel)]="createBarcodeScaleY"
         (change)="disableScales()"
         [disabled]="createBarcodeDisabled === 'XY'"
+        #scaleY (change)="setScaleY(scaleY.value)"
       />
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Rotation</mat-label>
-      <input matInput placeholder="N" />
-    </mat-form-field>
-    <mat-form-field appearance="standard">
-      <mat-label>symbology</mat-label>
-      <input matInput placeholder="code39" />
+      <input matInput placeholder="N"
+      #rotation (change)="setRotation(rotation.value)"/>
     </mat-form-field>
     <mat-checkbox
       class="includeText"
       value=""
-      (click)="createBarcodeIncludeText.function = true"
+      (click)="setIncludeText()"
       >Include Text</mat-checkbox
     >
   </div>
@@ -78,47 +84,57 @@
       <mat-label>Search</mat-label>
       <input matInput placeholder="Device" />
     </mat-form-field>
-    <mat-radio-group>
-      <mat-radio-button
-        class="device"
-        value=""
-        (click)="fdaRecallFunction.function = 'device'"
-        >Device</mat-radio-button
-      >
-      <mat-radio-button
-        class="drug"
-        value=""
-        (click)="fdaRecallFunction.function = 'drug'"
-        >Drug</mat-radio-button
-      >
-      <mat-radio-button
-        class="food"
-        value=""
-        (click)="fdaRecallFunction.function = 'food'"
-        >Food</mat-radio-button
-      >
-    </mat-radio-group>
-    <br>
-    <mat-radio-group>
-      <mat-radio-button
-        class="upc"
-        value=""
-        (click)="fdaRecallType.function = 'upc'"
-        >UPC</mat-radio-button
-      >
-      <mat-radio-button
-        class="search"
-        value=""
-        (click)="fdaRecallType.function = 'search'"
-        >Search</mat-radio-button
-      >
-    </mat-radio-group>
+    <mat-button-toggle-group #function="matButtonToggleGroup">
+      <mat-button-toggle
+      class="upc"
+      value="upc"
+      (change)="setFdaRecallFunction($event.value)">
+        UPC
+      </mat-button-toggle>
+      <mat-button-toggle
+      class="search"
+      value="search"
+      (change)="setFdaRecallFunction($event.value)">
+        Search
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group #type="matButtonToggleGroup">
+      <mat-button-toggle
+      class="device"
+      value="device"
+      (change)="setFdaRecallType($event.value)">
+        Device
+      </mat-button-toggle>
+      <mat-button-toggle
+      class="drug"
+      value="drug"
+      (change)="setFdaRecallType($event.value)">
+        Drug
+      </mat-button-toggle>
+      <mat-button-toggle
+      class="food"
+      value="food"
+      (change)="setFdaRecallType($event.value)">
+        Food
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+
+
+
+
   </div>
   <div id="upcLookupOptions">
     <mat-form-field appearance="standard">
-      <mat-label>Standard form field</mat-label>
-      <input matInput placeholder="Placeholder" />
-      <mat-hint>Hint</mat-hint>
+      <mat-label>UPC</mat-label>
+      <input matInput placeholder="9781483922973" />
     </mat-form-field>
   </div>
+</div>
+<div id="go">
+<button mat-flat-button
+(click)="runProgram()"
+color="primary"
+>Go</button>
 </div>
