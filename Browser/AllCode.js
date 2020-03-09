@@ -1,4 +1,4 @@
-var baseURL = "test-api1.zebra.com";
+var baseURL = "https://api.zebra.com";
 var baseApiKey = "";               
                                
                                
@@ -119,7 +119,7 @@ var setApiKey = function setApiKey(key){
 }                            
                                                                     
 
-var Create = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
+var CreateBarcode = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -209,7 +209,7 @@ function DrugUpc(upc, limit=1, apiKey){
 //
 //
 //
-function UpcLookup(upc, apiKey){
+function UPCLookup(upc, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;

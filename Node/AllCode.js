@@ -1,4 +1,4 @@
-var baseURL = "test-api1.zebra.com";
+var baseURL = "https://api.zebra.com";
 var baseApiKey = "";               
                                
                                
@@ -115,11 +115,11 @@ function callServiceBytes(api, method, data, apiKey){
                              
 var setApiKey = function setApiKey(key){
     baseApiKey = key;            
-    console.log("API Key is now: " + apiKey);
+    console.log("API Key is now: " + baseApiKey);
 }                            
                                                                     
 
-var Create = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
+var CreateBarcode = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -209,7 +209,7 @@ function DrugUpc(upc, limit=1, apiKey){
 //
 //
 //
-function UpcLookup(upc, apiKey){
+function UPCLookup(upc, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -640,8 +640,7 @@ var Symbology =
 		"upcecomposite":"upcecomposite"
 	}
 
-
-module.exports = {
+/*module.exports = {
     BarcodeCreate: Create,
     setApiKey: setApiKey,
     UpcLookup: UpcLookup,
@@ -650,3 +649,4 @@ module.exports = {
     DeviceSearch: DeviceSearch,
     FoodUpc: FoodUpc
 }
+*/
