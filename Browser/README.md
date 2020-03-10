@@ -25,36 +25,35 @@ setApiKey("API-Key-Goes-Here");
 Create Barcode
 
 ```javascript
- Create("Desired-Symbology", "Barcode-Value", scale, "Rotation", showValueText, baseApiKey)
-     .then( data => {
-         console.log("Create Barcode: " + data);
-         var reader = data.body.getReader();
-         var imgData = "";
-         window.image = document.createElement('img');
-         document.body.appendChild(image);
-         return new ReadableStream({
-                 start(controller) {
-                       return pump();
-                   function pump() {
-                         return reader.read().then(({ done, value }) => {
-                           // When no more data needs to be consumed, close the stream
-                             if (done) {
-                                   controller.close();
-                                 return;
-                           }
-                         // Enqueue the next data chunk into our target stream
-                           controller.enqueue(value);
-                           return pump();
-                         });
-                       }
-                 }  
-         })
-     })
-     .then(stream => new Response(stream))
-     .then(response => response.blob())
-     .then(blob => URL.createObjectURL(blob))
-     .then(url => console.log(window.image.src = url))
-     .catch(err => console.error(err));
+Create("Desired-Symbology", "Barcode-Value", scale, "Rotation", showValueText, baseApiKey)
+    .then(data => {
+        console.log("Create Barcode: " + data);
+        var reader = data.body.getReader();
+        window.image = document.createElement('img');
+        document.body.appendChild(image);
+        return new ReadableStream({
+            start(controller) {
+                return pump();
+                function pump() {
+                    return reader.read().then(({ done, value }) => {
+                        // When no more data needs to be consumed, close the stream
+                        if (done) {
+                            controller.close();
+                            return;
+                        }
+                        // Enqueue the next data chunk into our target stream
+                        controller.enqueue(value);
+                        return pump();
+                    });
+                }
+            }
+        })
+    })
+    .then(stream => new Response(stream))
+    .then(response => response.blob())
+    .then(blob => URL.createObjectURL(blob))
+    .then(url => console.log(window.image.src = url))
+    .catch(err => console.error(err));
 ```
 
 UPC Lookup
@@ -62,11 +61,10 @@ UPC Lookup
 ```javascript
 UpcLookup("Barcode-Value-Goes-Here", baseApiKey)
     .then(data => {
-        var items = "";
         var listInfo = "";
-        data.json().then( (d) => {
-             d.items.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
-            console.log( "UPC Lookup: " + listInfo);
+        data.json().then((d) => {
+            d.items.forEach(function (i, ind, arr) { listInfo += JSON.stringify(i); });
+            console.log("UPC Lookup: " + listInfo);
         });
     })
     .catch(error => {
@@ -78,12 +76,11 @@ UpcLookup("Barcode-Value-Goes-Here", baseApiKey)
 FDA Food Recall
 
 ```javascript
-FoodUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
+FoodUpc("Barcode-Value-Goes-Here", resultCountGoesHere, baseApiKey)
+    .then(data => {
         var listInfo = "";
-        data.json().then( (d) => {
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+        data.json().then((d) => {
+            d.results.forEach(function (i, ind, arr) { listInfo += JSON.stringify(i); });
             console.log("Food UPC: " + listInfo)
         });
     })
@@ -95,17 +92,15 @@ FoodUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
 FDA Drug Recall
 
 ```javascript
-DrugUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
-            var listInfo = "";
-        data.json().then( (d) => {
-            items = d;
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+DrugUpc("Barcode-Value-Goes-Here", resultCountGoesHere, baseApiKey)
+    .then(data => {
+        var listInfo = "";
+        data.json().then((d) => {
+            d.results.forEach(function (i, ind, arr) { listInfo += JSON.stringify(i); });
             console.log("Drug UPC: " + listInfo);
         });
     })
-    .catch( error => {
+    .catch(error => {
         console.log("Drug UPC lookup failed!");
     });
 ```
@@ -113,17 +108,15 @@ DrugUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
 FDA Device Recall Search
 
 ```javascript
- DeviceSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
+DeviceSearch("Search-Text-Goes-Here", resultCountGoesHere, baseApiKey)
+    .then(data => {
         var listInfo = "";
-        data.json().then( (d) =>  {
-            items = d;
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+        data.json().then((d) => {
+            d.results.forEach(function (i, ind, arr) { listInfo += JSON.stringify(i); });
             console.log("Device Search: " + listInfo);
         });
     })
-    .catch( error => {
+    .catch(error => {
         console.log("Device lookup failed!")
     });
 ```
@@ -131,17 +124,15 @@ FDA Device Recall Search
 FDA Drug Recall Search
 
 ```javascript
-DrugSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
+DrugSearch("Search-Text-Goes-Here", resultCountGoesHere, baseApiKey)
+    .then(data => {
         var listInfo = "";
-        data.json().then( (d) => {
-            items = d.results;
-             d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+        data.json().then((d) => {
+            d.results.forEach(function (i, ind, arr) { listInfo += JSON.stringify(i); });
             console.log("Drug Search: " + listInfo);
         });
     })
-    .catch( error => {
+    .catch(error => {
         console.log("Drug Search failed!");
     });
 ```
