@@ -95,7 +95,7 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
-  // Either UPC or Search
+  // Either UPC or description
   setFdaRecallFunction(fun: string) {
     this.fdaArgs.function = fun;
   }
@@ -176,28 +176,38 @@ export class SavannaAPISComponent implements OnInit {
       );
       console.log(barcode);
     } else if (func === 'FDARecall') {
+      // TODO cannot have upc and device options selected at the same time.
       if (this.fdaArgs.function === 'upc') {
         if (this.fdaArgs.searchType === 'device') {
-
+          alert('No such thing as a Device UPC');
         } else if (this.fdaArgs.searchType === 'drug') {
-
+          const recall = allCalls.callDrugUPC(
+            this.fdaArgs.searchValue
+          );
         } else {
           // Else food.
+          const recall = allCalls.callFoodUPC(
+            this.fdaArgs.searchValue
+          );
         }
-      } else if (this.fdaArgs.function === 'search') {
+      } else if (this.fdaArgs.function === 'description') {
         if (this.fdaArgs.searchType === 'device') {
-
+          const recall = allCalls.callDeviceSearch(
+            this.fdaArgs.searchValue
+          );
         } else if (this.fdaArgs.searchType === 'drug') {
-
+          const recall = allCalls.callDrugSearch(
+            this.fdaArgs.searchValue
+          );
         } else {
           // Else food.
+          alert('No such thing as Food Search');
         }
       }
       const recall = allCalls;
 
     } else if (func === 'UPCLookup') {
-      this.getUPCLookupArgs();
-
+      const lookup = allCalls.callUPCLookup(this.upcLookupArgs.upc);
     } else { console.error(); }
     console.log(this.barcodeArgs);
   }

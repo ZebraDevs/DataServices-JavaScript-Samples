@@ -6,8 +6,8 @@ import * as AllCode from './AllCode.js';
 // API Key here.
 var baseApiKey = "s2ABMMbqbkLGhnFG4B2cMi33DPaBYdZ0";
 
-export function callDrugUPC() {
-  AllCode.DrugUpc("016500040194", 10, baseApiKey)
+export function callDrugUPC(searchValue) {
+  AllCode.DrugUpc(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -24,8 +24,8 @@ export function callDrugUPC() {
     });
 }
 
-export function callDrugSearch() {
-  AllCode.DrugSearch("Alka", 10, baseApiKey)
+export function callDrugSearch(searchValue) {
+  AllCode.DrugSearch(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -42,8 +42,8 @@ export function callDrugSearch() {
     });
 }
 
-export function callFoodUPC() {
-  FoodUpc("716519013089", 1, baseApiKey)
+export function callFoodUPC(searchValue) {
+  FoodUpc(searchValue, 1, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -60,8 +60,8 @@ export function callFoodUPC() {
     });
 }
 
-export function callDeviceSearch() {
-  DeviceSearch("scale", 10, baseApiKey)
+export function callDeviceSearch(searchValue) {
+  DeviceSearch(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -77,8 +77,8 @@ export function callDeviceSearch() {
       console.log("Device lookup failed!");
     });
 }
-export function callUPCLookup() {
-  UPCLookup("047701002292", baseApiKey)
+export function callUPCLookup(upc) {
+  UPCLookup(upc, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";

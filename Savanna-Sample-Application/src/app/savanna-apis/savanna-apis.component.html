@@ -82,7 +82,7 @@
   <div id="fdaRecallOptions">
     <mat-form-field appearance="standard">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Device" 
+      <input matInput placeholder="Device"
       #searchValue (change)="setFdaSearchValue(searchValue.value)"/>
     </mat-form-field>
     <mat-button-toggle-group #function="matButtonToggleGroup">
@@ -93,10 +93,10 @@
         UPC
       </mat-button-toggle>
       <mat-button-toggle
-      class="search"
-      value="search"
+      class="description"
+      value="description"
       (change)="setFdaRecallFunction($event.value)">
-        Search
+        Description
       </mat-button-toggle>
     </mat-button-toggle-group>
 
