@@ -18,7 +18,9 @@ Usage guide
 
 Set Zebra Savanna API key
 
-`setApiKey("API-Key-Goes-Here");`
+```javascript
+setApiKey("API-Key-Goes-Here");
+```
 
 Create Barcode
 

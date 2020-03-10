@@ -15,4 +15,6 @@ Built-in Help
 
 To use the built-in help function, use the following command:
 
-`node Node/SavannaBarcode.js Help`
+```bash
+node SavannaBarcode.js Help
+```
