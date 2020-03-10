@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as AllCode from '../../assets/js/AllCode';
+import * as allCalls from '../../assets/js/callAllCode';
 // declare var AllCode: any;
 
 // This is where you define the functions you want to use from AllCode.js
@@ -12,7 +12,6 @@ import * as AllCode from '../../assets/js/AllCode';
 })
 export class SavannaAPISComponent implements OnInit {
   radioButton: any;
-  createBarcodeIncludeText: any;
   createBarcodeScale: any;
   createBarcodeScaleX: any;
   createBarcodeScaleY: any;
@@ -25,9 +24,6 @@ export class SavannaAPISComponent implements OnInit {
   constructor() {
     this.radioButton = {
       function: ''
-    };
-    this.createBarcodeIncludeText = {
-      function: false
     };
     this.barcodeArgs = {
       symbology: '',
@@ -51,6 +47,7 @@ export class SavannaAPISComponent implements OnInit {
 
   ngOnInit(): void {
     this.makeInputHidden();
+    this.barcodeArgs.includeText = false;
   }
 
 
@@ -98,12 +95,12 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
-
+  // Either UPC or Search
   setFdaRecallFunction(fun: string) {
     this.fdaArgs.function = fun;
   }
 
-
+  // Either Device, Drug, or Food
   setFdaSearchType(type: string) {
     this.fdaArgs.searchType = type;
   }
@@ -168,7 +165,7 @@ export class SavannaAPISComponent implements OnInit {
     // Gets the function
     const func = this.getFunction();
     if (func === 'CreateBarcode') {
-      var barcode = AllCode.Create(
+      const barcode = allCalls.callCreateBarcode(
         this.barcodeArgs.symbology,
         this.barcodeArgs.text,
         this.barcodeArgs.scale,
@@ -177,8 +174,26 @@ export class SavannaAPISComponent implements OnInit {
         this.barcodeArgs.rotation,
         this.barcodeArgs.includeText
       );
+      console.log(barcode);
     } else if (func === 'FDARecall') {
-      this.getFDARecallArgs();
+      if (this.fdaArgs.function === 'upc') {
+        if (this.fdaArgs.searchType === 'device') {
+
+        } else if (this.fdaArgs.searchType === 'drug') {
+
+        } else {
+          // Else food.
+        }
+      } else if (this.fdaArgs.function === 'search') {
+        if (this.fdaArgs.searchType === 'device') {
+
+        } else if (this.fdaArgs.searchType === 'drug') {
+
+        } else {
+          // Else food.
+        }
+      }
+      const recall = allCalls;
 
     } else if (func === 'UPCLookup') {
       this.getUPCLookupArgs();

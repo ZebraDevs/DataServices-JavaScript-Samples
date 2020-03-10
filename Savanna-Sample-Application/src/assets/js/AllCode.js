@@ -1,15 +1,13 @@
-var baseURL = "test-api1.zebra.com";
-var baseApiKey = "";               
-                               
-                               
+var baseURL = "api.zebra.com";
+
 function callServiceBytes2(api, method, data, apiKey){
-    var uri = baseURL +api;
+    var uri = baseURL +  api;
 
     if(apiKey == "" || apiKey == undefined || apiKey == null){
         console.error("Please set an API Key with setApiKey() ");
-        return null;           
-    }                          
-    
+        return null;
+    }
+
     if(method == undefined || method == null){
         method = "GET";
     }
@@ -31,21 +29,21 @@ function callServiceBytes2(api, method, data, apiKey){
             method = "GET";
     }
 
-    var params = {             
+    var params = {
         host: baseURL,
         port: 443,
         path: "/v2/tools/" + api,
         method: method,
         gzip: true,
         encoding: "binary",
-        headers:{              
-            "apiKey": apiKey,          
+        headers:{
+            "apiKey": apiKey,
             "Content-Type": "image/png"
-        },                     
-    //    body: data,            
-    //    method: method         
-    };                         
-    
+        },
+    //    body: data,
+    //    method: method
+    };
+
     return new Promise((resolve, reject) => {
         //Get data
         var data = [];
@@ -68,58 +66,58 @@ function callServiceBytes2(api, method, data, apiKey){
 }
 
 function callServiceBytes(api, method, data, apiKey){
-    var uri = "https://" + baseURL + "/v2/tools/" + api;   
-    //var uri = api;                         
+    var uri = "https://" + baseURL + "/v2/tools/" + api;
+    //var uri = api;
     if(apiKey == "" || apiKey == undefined || apiKey == null){
         console.error("Please set an API Key with setApiKey() ");
-        return null;                                                
-    }                        
-                               
+        return null;
+    }
+
     if(method == undefined || method == null){
-        method = "GET";        
-    }                          
+        method = "GET";
+    }
     method = method.toLowerCase();
-    switch(method){            
-        case "post":           
-            method = "POST";   
-            break;             
-        case "get":            
-            method = "GET";    
-            break;             
-        case "put":            
-            method = "PUT";    
-            break;             
-        case "delete":         
-            method = "DELETE"; 
-            break;             
-        default:               
-            method = "GET";    
-                               
-    }                          
-                               
-    var params = {             
-        headers:{              
-            "apiKey": apiKey,                          
-        },                     
-        body: data,            
-        method: method         
-    };                         
-        
+    switch(method){
+        case "post":
+            method = "POST";
+            break;
+        case "get":
+            method = "GET";
+            break;
+        case "put":
+            method = "PUT";
+            break;
+        case "delete":
+            method = "DELETE";
+            break;
+        default:
+            method = "GET";
+
+    }
+
+    var params = {
+        headers:{
+            "apiKey": apiKey,
+        },
+        body: data,
+        method: method
+    };
+
     return new Promise((resolve, reject) => {
-        fetch(uri, params)         
-        .then(data => resolve(data))
+        fetch(uri, params)
+        .then(data => resolve(data || null))
         .catch(error => reject(error) );
     });
-    
-}                              
-                             
-var setApiKey = function setApiKey(key){
-    baseApiKey = key;            
-    console.log("API Key is now: " + apiKey);
-}                            
-                                                                    
 
-var Create = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
+}
+
+var setApiKey = function setApiKey(key){
+    baseApiKey = key;
+    console.log("API Key is now: " + baseApiKey);
+}
+
+
+export var CreateBarcode = function(symbology, text, scale, scaleX, scaleY, rotation = "N", includeText = false, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -127,22 +125,28 @@ var Create = function(symbology, text, scale, rotation = "N", includeText = fals
         callFunction = callServiceBytes2;
     }
 
-        return new Promise((resolve, reject) =>{        
+        return new Promise((resolve, reject) =>{
+            if(scale === null) {
+              callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scaleX=${scaleX}&scaleY=${scaleY}&rotate=${scale}&includeText=${includeText}`,null, null, apiKey)
+                  .then(data => resolve(data ) )
+                  .catch(error => reject(error));
+            } else {
             callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scale=${scale}&rotate=${scale}&includeText=${includeText}`,null, null, apiKey)
                 .then(data => resolve(data ) )
                 .catch(error => reject(error));
+            }
         });
 }
 
- 
- 
- 
+
+
+
 //FDA Recall
 //
 //
 //
- 
-function DeviceSearch(search, limit=1, apiKey){
+
+export function DeviceSearch(search, limit=1, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -156,8 +160,8 @@ function DeviceSearch(search, limit=1, apiKey){
             .catch(error => reject(error));
     });
 }
- 
-function DrugSearch(search, limit = 1, apiKey){
+
+export function DrugSearch(search, limit = 1, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -171,8 +175,8 @@ function DrugSearch(search, limit = 1, apiKey){
             .catch(error => reject(error));
     });
 }
- 
-function FoodUpc(upc, limit=1, apiKey){
+
+export function FoodUpc(upc, limit=1, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -186,8 +190,8 @@ function FoodUpc(upc, limit=1, apiKey){
             .catch(error => reject(error));
     });
 }
- 
-function DrugUpc(upc, limit=1, apiKey){
+
+export function DrugUpc(upc, limit=1, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -201,15 +205,15 @@ function DrugUpc(upc, limit=1, apiKey){
                 .catch(error => reject(error));
     });
 }
- 
- 
- 
+
+
+
 //UPC Lookup
 //
 //
 //
 //
-function UpcLookup(upc, apiKey){
+function UPCLookup(upc, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -223,7 +227,7 @@ function UpcLookup(upc, apiKey){
                 .catch(error => reject(error));
     });
 }
- 
+
 
 //Symbology
 //
@@ -640,8 +644,7 @@ var Symbology =
 		"upcecomposite":"upcecomposite"
 	}
 
-
-module.exports = {
+/*module.exports = {
     BarcodeCreate: Create,
     setApiKey: setApiKey,
     UpcLookup: UpcLookup,
@@ -650,3 +653,4 @@ module.exports = {
     DeviceSearch: DeviceSearch,
     FoodUpc: FoodUpc
 }
+*/
