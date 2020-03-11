@@ -265,13 +265,13 @@ function CallCreateBarcode(upc, symbology, apiKey){
 
         ZebraSavanna.BarcodeCreate(symbology, upc, 1, "N", true, apiKey)
             .then(data => {
-                console.log("Create Barcode writing to disk");
+                console.log("Create Barcode writing to disk.");
                 var newData = data;
                     //.toString().replace("/^data:image\/\w+;base64", '');
                 fs.writeFile(upc+".png", newData, "binary", (err) => { if(err){ console.log("Error: " + err); throw err; } } )
             })
             .catch(error => {
-                console.log("Create Barcode failed");
+                console.log("Create Barcode failure");
                 console.log(error);
             });
 }
@@ -281,11 +281,12 @@ function CallUPCLookup(upcValue, apiKey){
         ZebraSavanna.UpcLookup(upcValue, apiKey)//"047701002292")
         .then(data => { 
                 //console.log("Returned Data: " + data);
+                console.log("UPC Lookup Info");
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
         })
         .catch(error => {
-            console.log("UPC Lookup Failed");
+            console.log("UPC Lookup failure");
             console.log(error);
         });
 }
@@ -300,7 +301,7 @@ function CallDeviceSearch(search, count, apiKey){
                 console.log(myNewData);
             })
             .catch(error => {
-                console.log("Device Search Failed");
+                console.log("Device Search failure");
                 console.log(error);
             });
 
@@ -316,7 +317,7 @@ function CallFoodUpc(upc, count, apiKey){
                 console.log(myNewData);
             })
             .catch(error => {
-                console.log("Food UPC Failed");
+                console.log("Food UPC failure");
                 console.log(error);
             });
         
@@ -332,7 +333,7 @@ function CallDrugSearch(drugUPC, count, apiKey){
                 console.log(myNewData);
             })
             .catch(error => {
-                console.log("Drug Search Failed");
+                console.log("Drug Search failure");
                 console.log(error);
             });
 
@@ -348,7 +349,7 @@ function CallDrugUpc(drugUPC, count, apiKey){
                 console.log(myNewData);
             })
             .catch(error => {
-                console.log("Drug UPC Failed");
+                console.log("Drug UPC failure");
                 console.log(error);
             });
            

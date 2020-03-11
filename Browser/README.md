@@ -68,7 +68,7 @@ UpcLookup("Barcode-Value-Goes-Here", baseApiKey)
         });
     })
     .catch(error => {
-        console.log("UPC Lookup Failed");
+        console.log("UPC Lookup failure");
         console.log(error);
     });
 ```
@@ -85,7 +85,7 @@ FoodUpc("Barcode-Value-Goes-Here", resultCountGoesHere, baseApiKey)
         });
     })
     .catch(error => {
-        console.log("Food UPC lookup failed!");
+        console.log("Food UPC failure");
     });
 ```
 
@@ -101,7 +101,7 @@ DrugUpc("Barcode-Value-Goes-Here", resultCountGoesHere, baseApiKey)
         });
     })
     .catch(error => {
-        console.log("Drug UPC lookup failed!");
+        console.log("Drug UPC failure");
     });
 ```
 
@@ -117,7 +117,7 @@ DeviceSearch("Search-Text-Goes-Here", resultCountGoesHere, baseApiKey)
         });
     })
     .catch(error => {
-        console.log("Device lookup failed!")
+        console.log("Device Lookup failure")
     });
 ```
 
@@ -133,6 +133,6 @@ DrugSearch("Search-Text-Goes-Here", resultCountGoesHere, baseApiKey)
         });
     })
     .catch(error => {
-        console.log("Drug Search failed!");
+        console.log("Drug Search failure");
     });
 ```
