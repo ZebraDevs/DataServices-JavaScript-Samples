@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// import { AllCode } from '../../assets/js/AllCode';
-declare var AllCode: any;
+import * as allCalls from '../../assets/js/callAllCode';
+// declare var AllCode: any;
 
 // This is where you define the functions you want to use from AllCode.js
 // declare const
@@ -12,7 +12,6 @@ declare var AllCode: any;
 })
 export class SavannaAPISComponent implements OnInit {
   radioButton: any;
-  createBarcodeIncludeText: any;
   createBarcodeScale: any;
   createBarcodeScaleX: any;
   createBarcodeScaleY: any;
@@ -26,9 +25,6 @@ export class SavannaAPISComponent implements OnInit {
     this.radioButton = {
       function: ''
     };
-    this.createBarcodeIncludeText = {
-      function: false
-    };
     this.barcodeArgs = {
       symbology: '',
       text: '',
@@ -40,6 +36,7 @@ export class SavannaAPISComponent implements OnInit {
     };
     this.fdaArgs = {
       function: '',
+      searchType: '',
       searchValue: ''
     };
     this.upcLookupArgs = {
@@ -47,9 +44,12 @@ export class SavannaAPISComponent implements OnInit {
     };
   }
 
+
   ngOnInit(): void {
     this.makeInputHidden();
+    this.barcodeArgs.includeText = false;
   }
+
 
   inputSelector() {
     const createBarcodeOptions = document.getElementById('createBarcodeOptions');
@@ -72,6 +72,7 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
+
   makeInputHidden() {
     const createBarcodeOptions = document.getElementById('createBarcodeOptions');
     const fdaRecallOptions = document.getElementById('fdaRecallOptions');
@@ -83,6 +84,7 @@ export class SavannaAPISComponent implements OnInit {
     go.hidden = true;
   }
 
+
   disableScales() {
     if (this.createBarcodeScale) {
       this.createBarcodeDisabled = 'XY';
@@ -93,22 +95,31 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
-  setFdaRecallFunction(fun) {
-    // console.log(this.fdaRecallFunction.function + this.fdaRecallType.function);
-    console.log(fun);
+  // Either UPC or description
+  setFdaRecallFunction(fun: string) {
+    this.fdaArgs.function = fun;
   }
 
-  setFdaRecallType(type) {
-    console.log(type);
+  // Either Device, Drug, or Food
+  setFdaSearchType(type: string) {
+    this.fdaArgs.searchType = type;
   }
+
+
+  setFdaSearchValue(value: string) {
+    this.fdaArgs.searchValue = value;
+  }
+
 
   setSymbology(symbology: string) {
     this.barcodeArgs.symbology = symbology;
   }
 
+
   setText(text: string) {
     this.barcodeArgs.text = text;
   }
+
 
   setScale(scale: string) {
     this.barcodeArgs.scaleX = null;
@@ -116,19 +127,23 @@ export class SavannaAPISComponent implements OnInit {
     this.barcodeArgs.scale = scale;
   }
 
+
   setScaleX(scaleX: string) {
     this.barcodeArgs.scaleX = scaleX;
     this.barcodeArgs.scale = null;
   }
+
 
   setScaleY(scaleY: string) {
     this.barcodeArgs.scaleY = scaleY;
     this.barcodeArgs.scale = null;
   }
 
+
   setRotation(rotation: string) {
     this.barcodeArgs.rotation = rotation;
   }
+
 
   setIncludeText() {
     if (this.barcodeArgs.includeText) {
@@ -140,11 +155,17 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
+
+  setUpc(upc: string) {
+    this.upcLookupArgs.upc = upc;
+  }
+
+
   runProgram() {
     // Gets the function
     const func = this.getFunction();
     if (func === 'CreateBarcode') {
-      AllCode.Create(
+      const barcode = allCalls.callCreateBarcode(
         this.barcodeArgs.symbology,
         this.barcodeArgs.text,
         this.barcodeArgs.scale,
@@ -153,31 +174,64 @@ export class SavannaAPISComponent implements OnInit {
         this.barcodeArgs.rotation,
         this.barcodeArgs.includeText
       );
+      console.log(barcode);
     } else if (func === 'FDARecall') {
-      this.getFDARecallArgs();
+      // TODO cannot have upc and device options selected at the same time.
+      if (this.fdaArgs.function === 'upc') {
+        if (this.fdaArgs.searchType === 'device') {
+          alert('No such thing as a Device UPC');
+        } else if (this.fdaArgs.searchType === 'drug') {
+          const recall = allCalls.callDrugUPC(
+            this.fdaArgs.searchValue
+          );
+        } else {
+          // Else food.
+          const recall = allCalls.callFoodUPC(
+            this.fdaArgs.searchValue
+          );
+        }
+      } else if (this.fdaArgs.function === 'description') {
+        if (this.fdaArgs.searchType === 'device') {
+          const recall = allCalls.callDeviceSearch(
+            this.fdaArgs.searchValue
+          );
+        } else if (this.fdaArgs.searchType === 'drug') {
+          const recall = allCalls.callDrugSearch(
+            this.fdaArgs.searchValue
+          );
+        } else {
+          // Else food.
+          alert('No such thing as Food Search');
+        }
+      }
+      const recall = allCalls;
 
     } else if (func === 'UPCLookup') {
-      this.getUPCLookupArgs();
-
+      const lookup = allCalls.callUPCLookup(this.upcLookupArgs.upc);
     } else { console.error(); }
     console.log(this.barcodeArgs);
   }
+
 
   getFunction() {
     // Gets the type of call that's going to be made.
     return this.radioButton.function;
   }
 
+
   getCreateBarcodeArgs() {
 
   }
+
 
   getFDARecallArgs() {
 
   }
 
+
   getUPCLookupArgs() {
 
   }
+
 
 }
