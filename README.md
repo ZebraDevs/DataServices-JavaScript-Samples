@@ -1,4 +1,4 @@
-Zebra Savanna Data Services JavaScript SDK                                                                                                                                         
+Zebra Savanna Data Services JavaScript SDK
 ==========================================
 
-Please see the README.md files in the /Node and /Browser folders for information on how to use the SDK
+Please see the [Node README](Node/README.md) and the [browser README](Browser/README.md) files for information on how to use the SDK.
