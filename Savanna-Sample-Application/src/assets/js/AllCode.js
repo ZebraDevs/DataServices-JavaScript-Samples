@@ -117,7 +117,7 @@ var setApiKey = function setApiKey(key){
 }
 
 
-export var CreateBarcode = function(symbology, text, scale, scaleX, scaleY, rotation = "N", includeText = false, apiKey){
+export var CreateBarcode = function(symbology, text, scale, scaleX, scaleY, rotation, includeText, apiKey){
     var callFunction = null;
     if (typeof fetch === "function"){
         callFunction = callServiceBytes;
@@ -127,11 +127,11 @@ export var CreateBarcode = function(symbology, text, scale, scaleX, scaleY, rota
 
         return new Promise((resolve, reject) =>{
             if(scale === null) {
-              callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scaleX=${scaleX}&scaleY=${scaleY}&rotate=${scale}&includeText=${includeText}`,null, null, apiKey)
+              callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scaleX=${scaleX}&scaleY=${scaleY}&rotate=${rotation}&includeText=${includeText}`,null, null, apiKey)
                   .then(data => resolve(data ) )
                   .catch(error => reject(error));
             } else {
-            callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scale=${scale}&rotate=${scale}&includeText=${includeText}`,null, null, apiKey)
+            callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scale=${scale}&rotate=${rotation}&includeText=${includeText}`,null, null, apiKey)
                 .then(data => resolve(data ) )
                 .catch(error => reject(error));
             }

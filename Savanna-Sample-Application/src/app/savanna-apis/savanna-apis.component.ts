@@ -199,38 +199,22 @@ export class SavannaAPISComponent implements OnInit {
           const recall = allCalls.callDrugSearch(
             this.fdaArgs.searchValue
           );
+          //console.log(allCalls.jsonData);
         } else {
           // Else food.
           alert('No such thing as Food Search');
         }
       }
-      const recall = allCalls;
-
     } else if (func === 'UPCLookup') {
       const lookup = allCalls.callUPCLookup(this.upcLookupArgs.upc);
     } else { console.error(); }
-    console.log(this.barcodeArgs);
+    //console.log(allCalls.jsonData);
   }
 
 
   getFunction() {
     // Gets the type of call that's going to be made.
     return this.radioButton.function;
-  }
-
-
-  getCreateBarcodeArgs() {
-
-  }
-
-
-  getFDARecallArgs() {
-
-  }
-
-
-  getUPCLookupArgs() {
-
   }
 
 
