@@ -20,6 +20,9 @@ export class SavannaAPISComponent implements OnInit {
   barcodeArgs: any;
   fdaArgs: any;
   upcLookupArgs: any;
+  // Enum types
+  symbologys = this.generateArray(allCalls.symbology);
+  rotationTypes = this.generateArray(allCalls.rotation);
 
   constructor() {
     this.radioButton = {
@@ -95,6 +98,7 @@ export class SavannaAPISComponent implements OnInit {
     }
   }
 
+
   // Either UPC or description
   setFdaRecallFunction(fun: string) {
     this.fdaArgs.function = fun;
@@ -153,6 +157,7 @@ export class SavannaAPISComponent implements OnInit {
     } else {
       this.barcodeArgs.includeText = false;
     }
+    console.log(this.barcodeArgs.includeText);
   }
 
 
@@ -162,6 +167,10 @@ export class SavannaAPISComponent implements OnInit {
 
 
   runProgram() {
+    // Check if APIKEY exisits
+    if (allCalls.baseApiKey === "") {
+      alert('Please specifiy an API KEY');
+    } else {
     // Gets the function
     const func = this.getFunction();
     if (func === 'CreateBarcode') {
@@ -174,9 +183,7 @@ export class SavannaAPISComponent implements OnInit {
         this.barcodeArgs.rotation,
         this.barcodeArgs.includeText
       );
-      console.log(barcode);
     } else if (func === 'FDARecall') {
-      // TODO cannot have upc and device options selected at the same time.
       if (this.fdaArgs.function === 'upc') {
         if (this.fdaArgs.searchType === 'device') {
           alert('No such thing as a Device UPC');
@@ -199,16 +206,17 @@ export class SavannaAPISComponent implements OnInit {
           const recall = allCalls.callDrugSearch(
             this.fdaArgs.searchValue
           );
-          //console.log(allCalls.jsonData);
         } else {
           // Else food.
-          alert('No such thing as Food Search');
+          const recall = allCalls.callFoodSearch(
+            this.fdaArgs.searchValue
+          );
         }
       }
     } else if (func === 'UPCLookup') {
       const lookup = allCalls.callUPCLookup(this.upcLookupArgs.upc);
     } else { console.error(); }
-    //console.log(allCalls.jsonData);
+  }
   }
 
 
@@ -216,6 +224,17 @@ export class SavannaAPISComponent implements OnInit {
     // Gets the type of call that's going to be made.
     return this.radioButton.function;
   }
+
+  
+  // Coverts a Json object into an Array.
+  generateArray(obj){
+    return Object.keys(obj).map((key)=>{ return obj[key]});
+ }
+
+
+ setKey(key: string) {
+   allCalls.setApiKey(key);
+ }
 
 
 }
