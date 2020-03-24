@@ -2,6 +2,8 @@
   <span>Savanna Sample Application</span>
 </mat-toolbar>
 <br>
+<!--Functions-->
+
 <mat-radio-group class="selector-group" (change)="inputSelector()">
   <mat-radio-button
     class="CreateBarcode"
@@ -22,12 +24,21 @@
     >UPC Lookup</mat-radio-button
   >
 </mat-radio-group>
+<!--APIKEY Input Box-->
+<mat-form-field appearance="standard">
+  <mat-label>Api Key</mat-label>
+  <input matInput placeholder="Api Key"
+  #apiKey (change)="setKey(apiKey.value)"/>
+</mat-form-field>
 <div>
   <div id="createBarcodeOptions">
-    <mat-form-field appearance="standard">
+    <mat-form-field>
       <mat-label>Symbology</mat-label>
-      <input matInput placeholder="code39"
-      #symbology (change)="setSymbology(symbology.value)"/>
+      <mat-select (selectionChange)="setSymbology($event.value)">
+        <mat-option *ngFor="let symbology of symbologys" [value]="symbology">
+          {{symbology}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Text</mat-label>
@@ -67,10 +78,13 @@
         #scaleY (change)="setScaleY(scaleY.value)"
       />
     </mat-form-field>
-    <mat-form-field appearance="standard">
+    <mat-form-field>
       <mat-label>Rotation</mat-label>
-      <input matInput placeholder="N"
-      #rotation (change)="setRotation(rotation.value)"/>
+      <mat-select (selectionChange)="setRotation($event.value)">
+        <mat-option *ngFor="let rotation of rotationTypes" [value]="rotation">
+          {{rotation}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-checkbox
       class="includeText"
@@ -82,7 +96,7 @@
   <div id="fdaRecallOptions">
     <mat-form-field appearance="standard">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Device"
+      <input matInput placeholder="Device/ Food/ Drug"
       #searchValue (change)="setFdaSearchValue(searchValue.value)"/>
     </mat-form-field>
     <mat-button-toggle-group #function="matButtonToggleGroup">
@@ -135,4 +149,10 @@
 (click)="runProgram()"
 color="primary"
 >Go</button>
+</div>
+
+<div id="output">
+  <!--
+  <pre>{{jsonData | json}}</pre>
+  -->
 </div>

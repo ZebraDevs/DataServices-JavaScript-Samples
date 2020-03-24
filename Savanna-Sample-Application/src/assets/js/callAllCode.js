@@ -1,10 +1,11 @@
 import * as AllCode from './AllCode.js';
 
-// Base Savanna URL
-// var baseURL = "test-api1.zebra.com";
-
 // API Key here.
-var baseApiKey = "s2ABMMbqbkLGhnFG4B2cMi33DPaBYdZ0";
+export var baseApiKey = "";
+export var jsonData = '';
+export var symbology = AllCode.Symbology;
+export var rotation = AllCode.Rotation;
+
 
 export function callDrugUPC(searchValue) {
   AllCode.DrugUpc(searchValue, 10, baseApiKey)
@@ -12,17 +13,20 @@ export function callDrugUPC(searchValue) {
       var items = "";
       var listInfo = "";
       data.json().then(d => {
-        items = d;
-        d.results.forEach(function(i, ind, arr) {
+        items = d.results;
+        d.results.forEach(function (i, ind, arr) {
           listInfo += JSON.stringify(i);
         });
         console.log("Drug UPC: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
       });
     })
     .catch(error => {
       console.log("Drug UPC lookup failed!");
     });
 }
+
 
 export function callDrugSearch(searchValue) {
   AllCode.DrugSearch(searchValue, 10, baseApiKey)
@@ -31,10 +35,12 @@ export function callDrugSearch(searchValue) {
       var listInfo = "";
       data.json().then(d => {
         items = d.results;
-        d.results.forEach(function(i, ind, arr) {
-          listInfo += JSON.stringify(i);
+        d.results.forEach(function (i, ind, arr) {
+          listInfo += JSON.stringify(i, null, '\t');
         });
         console.log("Drug Search: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
       });
     })
     .catch(error => {
@@ -42,17 +48,20 @@ export function callDrugSearch(searchValue) {
     });
 }
 
+
 export function callFoodUPC(searchValue) {
   FoodUpc(searchValue, 1, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
       data.json().then(d => {
-        window.items = d;
-        d.results.forEach(function(i, ind, arr) {
+        items = d.results;
+        d.results.forEach(function (i, ind, arr) {
           listInfo += JSON.stringify(i);
         });
         console.log("Food UPC: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
       });
     })
     .catch(error => {
@@ -60,33 +69,61 @@ export function callFoodUPC(searchValue) {
     });
 }
 
+
 export function callDeviceSearch(searchValue) {
   DeviceSearch(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
       data.json().then(d => {
-        items = d;
-        d.results.forEach(function(i, ind, arr) {
+        items = d.results;
+        d.results.forEach(function (i, ind, arr) {
           listInfo += JSON.stringify(i);
         });
         console.log("Device Search: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
       });
     })
     .catch(error => {
       console.log("Device lookup failed!");
     });
 }
+
+
+export function callFoodSearch(searchValue) {
+  FoodSearch(searchValue, 10, baseApiKey)
+    .then(data => {
+      var items = "";
+      var listInfo = "";
+      data.json().then(d => {
+        items = d.results;
+        d.results.forEach(function (i, ind, arr) {
+          listInfo += JSON.stringify(i);
+        });
+        console.log("Food Search: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
+      });
+    })
+    .catch(error => {
+      console.log("Device lookup failed!");
+    });
+}
+
+
 export function callUPCLookup(upc) {
   UPCLookup(upc, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
       data.json().then(d => {
-        d.items.forEach(function(i, ind, arr) {
+        d.items.forEach(function (i, ind, arr) {
           listInfo += JSON.stringify(i);
         });
         console.log("UPC Lookup: " + listInfo);
+        //Printing output to Angular
+        setOutput(listInfo);
       });
     })
     .catch(error => {
@@ -95,6 +132,7 @@ export function callUPCLookup(upc) {
     });
 }
 
+
 export function callCreateBarcode(symbology, text, scale, scaleX, scaleY, rotation, includeText) {
   AllCode.CreateBarcode(symbology, text, scale, scaleX, scaleY, rotation, includeText, baseApiKey)
     .then(data => {
@@ -102,7 +140,16 @@ export function callCreateBarcode(symbology, text, scale, scaleX, scaleY, rotati
       window.myData = data.body;
       var reader = data.body.getReader();
       var imgData = "";
+
+      // Remove previous image
+      if (document.getElementById("output")) {
+        var old = document.getElementById("output")
+        var reallyOld = old.parentNode
+        reallyOld.removeChild(old)
+      }
+
       window.image = document.createElement("img");
+      window.image.id = "output";
       document.body.appendChild(image);
       return new ReadableStream({
         start(controller) {
@@ -127,4 +174,22 @@ export function callCreateBarcode(symbology, text, scale, scaleX, scaleY, rotati
     .then(blob => URL.createObjectURL(blob))
     .then(url => console.log((window.image.src = url)))
     .catch(err => console.error(err));
+}
+
+
+export function setApiKey(key) {
+  baseApiKey = key;
+}
+
+
+function setOutput(info) {
+  if (document.getElementById("output")) {
+    var old = document.getElementById("output")
+    var reallyOld = old.parentNode
+    reallyOld.removeChild(old)
+  }
+  var text = document.createElement("p");
+  text.id = "output";
+  text.innerText = info;
+  document.body.appendChild(text);
 }

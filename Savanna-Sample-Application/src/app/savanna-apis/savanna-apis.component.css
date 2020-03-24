@@ -24,5 +24,8 @@ mat-toolbar {
   border: 0.2em;
   border-style:dashed;
   border-color: darksalmon;
+}
 
+#output {
+  margin-left: 0.2em;
 }
