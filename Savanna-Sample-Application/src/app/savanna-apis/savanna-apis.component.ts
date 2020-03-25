@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as allCalls from '../../assets/js/callAllCode';
-// declare var AllCode: any;
-
-// This is where you define the functions you want to use from AllCode.js
-// declare const
 
 @Component({
   selector: 'app-savanna-apis',
