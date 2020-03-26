@@ -50,7 +50,7 @@ export function callDrugSearch(searchValue) {
 
 
 export function callFoodUPC(searchValue) {
-  FoodUpc(searchValue, 1, baseApiKey)
+  Allcode.FoodUpc(searchValue, 1, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -71,7 +71,7 @@ export function callFoodUPC(searchValue) {
 
 
 export function callDeviceSearch(searchValue) {
-  DeviceSearch(searchValue, 10, baseApiKey)
+  Allcode.DeviceSearch(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -92,7 +92,7 @@ export function callDeviceSearch(searchValue) {
 
 
 export function callFoodSearch(searchValue) {
-  FoodSearch(searchValue, 10, baseApiKey)
+  Allcode.FoodSearch(searchValue, 10, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";
@@ -113,7 +113,7 @@ export function callFoodSearch(searchValue) {
 
 
 export function callUPCLookup(upc) {
-  UPCLookup(upc, baseApiKey)
+  Allcode.UPCLookup(upc, baseApiKey)
     .then(data => {
       var items = "";
       var listInfo = "";

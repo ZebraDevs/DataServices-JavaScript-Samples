@@ -228,7 +228,7 @@ export function DrugUpc(upc, limit = 1, apiKey) {
 //
 //
 //
-function UPCLookup(upc, apiKey) {
+export function UPCLookup(upc, apiKey) {
 	var callFunction = null;
 	if (typeof fetch === "function") {
 		callFunction = callServiceBytes;
