@@ -4,7 +4,7 @@
   "description": "Allows you to use Zebra Technologies' Savanna Barcode APIs",
   "main": "SavannaBarcode.js",
   "dependencies": {
-    "yargs": "^15.1.0"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {},
   "scripts": {
